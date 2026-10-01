@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Welcome to my site</title>
+<meta name="description" content="Leason — Education / Skills / Experience">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/welcome.css">
+<link rel="stylesheet" href="css/desktop.css">
+</head>
+
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     WELCOME — 开机 / 登录场景
+     ══════════════════════════════════════════════════════════ -->
+<section class="welcome" id="welcome">
+
+  <div class="stage" id="stage">
+
+    <div class="laptop" id="laptop">
+      <div class="laptop__screen">
+        <span class="laptop__led" aria-hidden="true"></span>
+        <div class="screen">
+          <div class="screen__slot" id="screenSlot" aria-hidden="true"></div>
+
+          <button class="login" id="loginBtn" type="button">
+            <span class="login__caret" aria-hidden="true">&#9654;</span>
+            <span>LOG IN</span>
+          </button>
+
+          <p class="screen__mail">
+            <a href="mailto:Leason041900@gmail.com">Leason041900@gmail.com</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="laptop__base" aria-hidden="true">
+        <span class="laptop__hinge"></span>
+      </div>
+    </div>
+
+    <h1 class="wordmark" id="wordmark" aria-label="Welcome to my site"></h1>
+
+  </div>
+
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     DESKTOP — 登录之后
+     ══════════════════════════════════════════════════════════ -->
+<section class="desktop" id="desktop" aria-hidden="true">
+
+  <div class="desktop__sky" aria-hidden="true"></div>
+  <div class="desktop__grid" aria-hidden="true"></div>
+
+  <div class="shell">
+
+    <!-- 侧栏右缘那条弧 + 外面糊开的一层灰。纯装饰，z 在内容下面 -->
+    <div class="side__veil" aria-hidden="true"></div>
+    <div class="side__haze" aria-hidden="true"></div>
+
+    <!-- ─── 左侧栏 ─────────────────────────────────────── -->
+    <nav class="side" aria-label="Sections">
+      <div class="side__top">
+        <a class="back-home" href="#login" aria-label="Go back to homepage">
+          <span class="back-home__arrow" aria-hidden="true"></span>
+        </a>
+        <span class="side__brand">LEASON</span>
+      </div>
+
+      <div class="side__wheel">
+        <button class="tab is-active" type="button" data-panel="education">
+          <span class="tab__art" aria-hidden="true"></span>
+          <span class="tab__en">EDUCATION</span>
+          <span class="tab__cn">教育背景</span>
+        </button>
+
+        <button class="tab" type="button" data-panel="skills">
+          <span class="tab__art" aria-hidden="true"></span>
+          <span class="tab__en">SKILLS</span>
+          <span class="tab__cn">技能</span>
+        </button>
+
+        <button class="tab" type="button" data-panel="experience">
+          <span class="tab__art" aria-hidden="true"></span>
+          <span class="tab__en">EXPERIENCE</span>
+          <span class="tab__cn">经历</span>
+        </button>
+
+        <button class="tab" type="button" data-panel="projects">
+          <span class="tab__art" aria-hidden="true"></span>
+          <span class="tab__en">PROJECTS</span>
+          <span class="tab__cn">项目</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ─── 内容区 ─────────────────────────────────────── -->
+    <main class="panels" id="panels">
+
+      <!-- ══ EDUCATION ══ -->
+      <section class="panel is-active" id="panel-education">
+        <header class="panel__head">
+          <h2 class="panel__en">EDUCATION</h2>
+          <span class="panel__cn">教育背景</span>
+        </header>
+
+        <div class="folder" id="folder">
+          <div class="folder__body">
+            <span class="folder__tab" aria-hidden="true">EDUCATION</span>
+
+            <div class="folder__stage">
+              <article class="paper" id="paper">
+                <h3 class="paper__name">成都中医药大学</h3>
+                <p class="paper__meta">中医学 · 大三</p>
+
+                <dl class="facts">
+                  <div class="fact">
+                    <dt>院校</dt>
+                    <dd>成都中医药大学 <span class="sep">|</span> 专业：中医学</dd>
+                  </div>
+                  <div class="fact">
+                    <dt>年级</dt>
+                    <dd>大三 <span class="sep">|</span> 年龄：20 <span class="sep">|</span> GPA：3.59</dd>
+                  </div>
+                  <div class="fact">
+                    <dt>英语</dt>
+                    <dd>
+                      CET-4 / CET-6 通过<br>
+                      全国大学生英语竞赛 二等奖<br>
+                      英语口语流利
+                    </dd>
+                  </div>
+                  <div class="fact">
+                    <dt>法语</dt>
+                    <dd>兴趣学习，简单日常交流</dd>
+                  </div>
+                </dl>
+              </article>
+
+              <button class="folder__cover" id="folderCover" type="button" aria-expanded="false">
+                <span class="folder__coverText">教育背景</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <p class="note">
+          <span class="note__en">click to know details</span>
+          <span class="note__cn">点击查看详情</span>
+        </p>
+      </section>
+
+      <!-- ══ SKILLS ══ -->
+      <section class="panel" id="panel-skills">
+        <header class="panel__head">
+          <h2 class="panel__en">SKILLS</h2>
+          <span class="panel__cn">技能</span>
+        </header>
+
+        <ul class="deck">
+          <li class="card" role="button" tabindex="0" data-work="media/clip-2.mp4 media/clip-3.mp4">
+            <span class="card__no">01</span>
+            <h3 class="card__title">平面设计 / 视频剪辑</h3>
+            <p class="card__text">
+              熟练使用 <strong>Photoshop</strong>、<strong>Illustrator</strong>、
+              <strong>Premiere</strong>、<strong>剪映</strong> 等平面设计、视频剪辑软件。
+            </p>
+            <p class="card__text">
+              可独立完成图文排版、海报设计与视频剪辑。
+            </p>
+          </li>
+
+          <li class="card" role="button" tabindex="0">
+            <span class="card__no">02</span>
+            <h3 class="card__title">拍摄 / 后期</h3>
+            <p class="card__text">
+              熟悉大型活动、会议等拍摄流程，使用 <strong>Lightroom</strong> 调色后期。
+            </p>
+          </li>
+
+          <li class="card" role="button" tabindex="0">
+            <span class="card__no">03</span>
+            <h3 class="card__title">编程</h3>
+            <p class="card__text">
+              了解 <strong>C 语言</strong>、<strong>Python</strong>、<strong>numpy</strong>、<strong>SQL</strong> 使用。
+            </p>
+          </li>
+        </ul>
+
+        <p class="note">
+          <span class="note__en">click each to know details</span>
+          <span class="note__cn">点击查看详情</span>
+        </p>
+      </section>
+
+      <!-- ══ EXPERIENCE ══ -->
+      <section class="panel" id="panel-experience">
+        <header class="panel__head">
+          <h2 class="panel__en">EXPERIENCE</h2>
+          <span class="panel__cn">经历</span>
+        </header>
+
+        <div class="reel" id="reel">
+          <div class="reel__top">
+            <span class="reel__now" id="reelNow">—</span>
+          </div>
+
+          <div class="reel__stage" id="reelStage" tabindex="0" aria-label="Experience carousel">
+            <div class="reel__ring" id="reelRing">
+
+              <article class="cell" data-kind="校园经历">
+                <div class="cell__inner">
+                  <span class="cell__tag">校园经历</span>
+                  <h3 class="cell__org">成都中医药大学 新媒体中心</h3>
+                  <p class="cell__role">视频部副部长 <span class="cell__date">2025.9 — 2026.6</span></p>
+                  <ul class="cell__list">
+                    <li>统筹部门运营，协调对接工作，管理内容排期和人员分工</li>
+                    <li>保障官方账号视频周更节奏，审核并交付成品</li>
+                  </ul>
+                </div>
+              </article>
+
+              <article class="cell" data-kind="校园经历" data-work="img/work-campus-shoot.png">
+                <div class="cell__inner">
+                  <span class="cell__tag">校园经历</span>
+                  <h3 class="cell__org">成都中医药大学 新媒体中心</h3>
+                  <p class="cell__role">拍摄部成员 <span class="cell__date">2024.9 — 2026.6</span></p>
+                  <ul class="cell__list">
+                    <li>负责校内各类活动、会议、校园风光等拍摄任务，累计完成拍摄任务 50 余场</li>
+                    <li>完成选片、修图、统一水印及图片归档管理等任务</li>
+                    <li>对接各学院及校级部门活动拍摄需求，协调工作内容</li>
+                  </ul>
+                </div>
+              </article>
+
+              <article class="cell" data-kind="活动经历"
+                       data-work="img/work-gala-poster.png img/work-gala-shoot.png">
+                <div class="cell__inner">
+                  <span class="cell__tag">活动经历</span>
+                  <h3 class="cell__org">西南财经大学 2026 春季音乐剧 Gala《Wicked》剧组</h3>
+                  <p class="cell__role">后期工作 <span class="cell__date">2026 春</span></p>
+                  <ul class="cell__list">
+                    <li>负责剧组现场剧照拍摄、后期修图，产出活动纪实影像资料</li>
+                    <li>协助剧组完成宣发海报设计、微信公众号版图设计</li>
+                  </ul>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+          <div class="reel__bar">
+            <button class="reel__arrow" id="reelPrev" type="button" aria-label="Previous">&#9664;</button>
+            <p class="note">
+              <span class="note__en">click each to know details</span>
+              <span class="note__cn">点击查看详情</span>
+            </p>
+            <button class="reel__arrow" id="reelNext" type="button" aria-label="Next">&#9654;</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ PROJECTS ══ -->
+      <section class="panel" id="panel-projects">
+        <header class="panel__head">
+          <h2 class="panel__en">PROJECTS</h2>
+          <span class="panel__cn">项目</span>
+        </header>
+
+        <ul class="deck deck--proj">
+
+          <!-- ── 01 多邻国 ── -->
+          <li class="proj" role="button" tabindex="0" aria-label="多邻国品牌运营拆解">
+            <span class="proj__no">01</span>
+            <h3 class="proj__title">多邻国品牌运营拆解</h3>
+            <p class="proj__sub">从 IP 个性化到全球声量的路径研究</p>
+            <p class="proj__text">
+              以「向外获客 / 向内留存」两条线拆解多邻国的品牌运营：
+              它如何用 IP 角色把一款工具变成一种关系，又如何在
+              连胜机制、社交绑定与品类拓展上把这层关系持续加固。
+            </p>
+
+            <div class="proj__full">
+              <h4 class="proj__h">Context</h4>
+              <p>社媒粉丝千万量级的绿鸟，17亿次的话题讨论度，Duolingo将学习变成融入用户日常的打卡游戏，将功能性软件变成有个性的角色内容，发展至今，5270万DAU，1220万付费用户，预定额破17亿美元，这其中多邻国做对了什么？</p>
+
+              <h4 class="proj__h">品牌介绍</h4>
+              <p>猫头鹰和它的朋友们，携带完整的人物设定和相关叙事，Duolingo以"develop the best education in the world and make it universally available"为核心理念，从语言学习切入，以游戏闯关的方式重新定义了全球用户的学习体验，并获得热烈反响。</p>
+              <p>2026年最新数据显示：</p>
+              <table>
+                <tr><th>指标</th><th>数值</th><th>同比</th></tr>
+                <tr><td>DAU（日活跃用户）</td><td>5,870 万</td><td>+23%（增速较 Q1 加快）</td></tr>
+                <tr><td>MAU（月活跃用户）</td><td>1.406 亿</td><td>+9.6%</td></tr>
+                <tr><td>CURR（当前用户留存率）</td><td>84%</td><td>历史最高，同比 +1pt</td></tr>
+              </table>
+              <p>这验证了角色化策略对用户增长的驱动</p>
+              <p>商业部分，2.985 亿美元季度营收、1,270 万付费用户，尽管付费转化增速暂时落后于用户增长，这样的数据也足够可观。</p>
+              <p>接下来，我们从向内和向外两个方向切入，对Duolingo做详细的分析。</p>
+
+              <h4 class="proj__h">向外 ——声量、竞品与边界拓展</h4>
+              <p><strong>1.降低学习门槛，扩大用户群体，通过鲜明的品牌记忆点降低获客成本</strong></p>
+              <p>类似百词斩，不背单词 等相关同品类应用， 通常是考研、四六级等考试群体会集中寻找的需求，这类产品更像是被用来达成目标的工具，一种被动性的选择。流利说比百词斩更接近多邻国的“学习平台”定位，但它仍然没有解决一个核心问题：如何让没有明确英语提升需求的人，也产生下载冲动。 这正是多邻国用 IP 角色内容完成的事情。通过IP个性化，Duolingo用鲜活形象"强行闯入"用户的生活，拿回了一定主动权，模糊了需求与被选择的边界，真正做到了"make it universally"，数据显示，</p>
+              <p>50% 用户年龄在 21 岁以下，将其作为课堂学习的补充而非考试工具，280+门免费课程覆盖40+语言、英语在154个国家成为第一学习语言。</p>
+
+              <p><strong>2.贯彻始终的活人感，从社媒运营到APP内部广告</strong></p>
+              <p>-oscar：if u dont want to see my hot body，u can have the super Duo membership。这样一个让用户充会员的广告，关联了品牌IP形象—oscar，多邻国的国际象棋教练，一个自恋的肌肉男艺术家，却幽默又不生硬地与用户产生了互动。</p>
+              <p>-热梗  2026年9月苹果发布折叠屏 iPhone Duo，多邻国当晚连发七条推文，从“oh god oh god my SEO my SEO”的慌张，到“They named a phone after me and made it bend over”的金句，最后收束于 “Now there’s extra screen space for you to do your lesson”——把流量导回自家产品。玩梗的时候不忘记关联APP生态，社媒运营的视频里，合适的动效音出现，话题讨论度增长的同时也潜移默化地加深了品牌印象，对用户的，对路人的。</p>
+
+              <p><strong>3.品牌联名效益，带上所有人恶搞</strong></p>
+              <p>2025年6月，瑞幸与多邻国以拟人化形式官宣“联姻”。多邻国先发布结婚证剪影不点名瑞幸，上百家品牌蓝V下场“抢婚”；几天后瑞幸以IP形象Lucky认领新郎身份。婚礼当天全国门店变“婚宴现场”，购买联名饮品被戏称为“随份子”。首款联名饮品绿沙沙拿铁<strong>首周销量突破900万杯</strong>，联名周边上线当日便售罄。</p>
+              <p>在这场“闹剧”里，产品营销变成用户群体日常八卦的一部分，自然而然完成了声量到收益的转化，瑞幸全国超过6000家门店成为零边际成本的线下流量入口，购买行为被包装成“参与剧情”的社交动作。一个原本需要“产生学英语需求”才会下载的App，通过一场“婚礼”触达了从不学英语的咖啡消费者。多邻国新增用户环比增长30%，声量没有仅仅停留在话题层面，而是直接转化为下载行为。</p>
+
+              <h4 class="proj__h">向内 ——用户留存、体验感与多样性</h4>
+              <p><strong>一、用户留存机制如何拉紧用户</strong></p>
+              <p>关于多邻国用户留存的关键，分别从个人习惯、社群互动、关系绑定三个层面出发，针对用户行为的策略性解决方案。</p>
+              <p><strong>-打卡连胜：把习惯变成不可失去的资产。</strong></p>
+              <p>机制推出前，用户中断学习即意味着归零，而“归零”带来的挫败感常常直接导致卸载。2026年6月，多邻国推出“连续学习天数恢复”活动，约1540万学习者参与，其中近800万是此前无活跃连胜的用户。这些被重新激活的用户，留存表现优于常规回流用户。</p>
+              <p>相关数据也印证：用户连胜每增加100天，无提醒自主使用App的几率提升约22%；增加365天，几率翻倍。这意味着连胜越长，用户越不需要外部提醒——习惯已经内化为行为惯性。对用户，对平台都是两全其美的好事。</p>
+              <p><strong>-用户匹配：关系的再拓展</strong></p>
+              <p>多邻国正通过“Make Duolingo More Social”战略强化社交粘性。Friend Streaks（朋友连胜）要求两人一起完成课程才能维持连胜——有至少一个朋友连胜的用户，完成每日课程的可能性高出22%。排行榜则把用户分配到同级群组竞争，每周升降级。</p>
+              <p>通过这一举动，多邻国用户和产品的关系里，又加入轻量级的用户与用户的关系，隐形的增强了用户粘性，维持了用户参与度的稳定性</p>
+              <p><strong>-家庭套餐：用关系绑定替代功能锁定。</strong></p>
+              <p>家庭套餐的战略价值不在于收入贡献（家庭计划非付费成员不计入付费用户数），而在于社交绑定。数据显示，家庭套餐用户留存率较个人计划高出40%，生命周期价值显著提升。</p>
+
+              <p><strong>二.课程拓展，品牌进步是对用户的保证</strong></p>
+              <p>从语言学习入手，拓展到音乐、数学，乃至国际象棋。除了恶搞抽象，Duolingo的系统生态也很到位——多邻国英语测试（DET）的官方语言成绩认证，为“学完能证明什么”提供了硬性凭证，作为一个学习平台，给用户提供了必要的保证。同时，课程的多样化也带来了可观的收益。</p>
+              <p>据统计，象棋课程是多邻国全球增长最快的课程，Q2 2025 DAU已超百万，象棋学生平均在 Duolingo 上花的时间比语言学生更多。2026年2月，PvP模式从 iOS 扩展至 Android，课程从“单人解谜”升级为“社交对弈”，用户们打得火热。</p>
+              <p>分析：平台自身的提升，让用户心智从“有趣的 App”升格为“可信的学习系统”。需求池从“想学语言的人”扩展到了“所有对轻量学习有兴趣的人”。趣味性降低获客门槛，认证能力保证留存价值，课程多样性打开增长天花板——三者共同构成了“学习平台”的完整闭环。</p>
+
+              <h4 class="proj__h">风险与边界</h4>
+              <p><strong>1. 抽象红利的边际递减。</strong> 多邻国CMO已公开表示计划收敛“发疯”内容比例，从“80% unhinged”转向更平衡的配比。以“疯”成名之后，持续“更疯”的效果在递减，而转型又可能失去辨识度。</p>
+              <p><strong>2. 用户端的“抽象反噬”。</strong> 部分家长反映孩子模仿角色的“黑化、翻白眼”等行为，担忧未成年人将讽刺、暴躁视为人际互动常态。“非正式”语气是亲近感的来源，但边界一旦突破，亲近就变成不适当。</p>
+              <p><strong>3. 角色信任的脆弱性。</strong> 2025年“AI优先”战略宣布后，用户出现大规模退订和卸载，全球负面声量占比达41.1%。当品牌人设是“有趣的朋友”，公司行为却表现出“效率机器”的冷漠时，人格化积累的信任会被迅速透支。</p>
+
+              <h4 class="proj__h">总结</h4>
+              <p>多邻国的案例说明，品牌与用户的关系是可以被重新定义的。它把传统的教育者与学习者，改写成了一只鸟和它的朋友——这句话定下来之后，社媒语气、App 推送、图标表情、联名方式就都有了同一个坐标。</p>
+              <p>于是用户不再是使用一个学习工具，而是在维持一段关系。工具可以被替代，关系很难被替代。这也解释了为什么它在向外拓展声量、向内经营留存时，始终能保持同一种语气。</p>
+              <p>当然，这套打法并非没有代价。抽象红利的边际递减、用户端的「抽象反噬」、以及角色信任的脆弱性，都说明人格化是一种高收益、也高波动的资产——它对品牌言行一致的要求极高，一旦公司行为与角色人设错位，积累的信任会被迅速透支。</p>
+              <p>对任何一个想经营用户关系的品牌来说，多邻国真正的价值不在于它发疯的方式，而在于它先回答清楚了我是谁、我和用户是什么关系，再让所有表达围绕这个答案展开。</p>
+            </div>
+          </li>
+
+          <!-- ── 02 网红城市 ── -->
+          <li class="proj" role="button" tabindex="0" aria-label="数字时代网红城市的历史叙事困境">
+            <span class="proj__no">02</span>
+            <h3 class="proj__title">数字时代网红城市的历史叙事困境</h3>
+            <p class="proj__sub">旅游目的地内容传播与用户行为调研报告</p>
+            <p class="proj__text">
+              网红打卡点正在取代城市历史，成为公众认知一座城市的首要标签。
+              这份报告以平台数据与目的地客流数据为基础，拆解历史叙事被边缘化的
+              四条路径，并从城市宣传、社会政策、个人意识三层给出建议。
+            </p>
+
+            <div class="proj__full">
+              <h4 class="proj__h">一、研究背景与目的</h4>
+              <p><strong>研究背景：</strong>网红城市指因独特特质在网络上走红的城市，随之兴起跟风化、特种兵式的短时旅行。内容平台已成为目的地信息的主要入口，打卡点逐步取代城市历史，成为公众认知一座城市的首要标签。</p>
+              <p><strong>研究目的：</strong>识别网红城市发展过程中历史叙事流失的机制；评估该现象对城市长期发展的影响；提出可落地的应对建议。</p>
+
+              <h4 class="proj__h">二、研究方法与数据来源</h4>
+              <p>以内容平台公开数据、目的地客流数据与行业报告为基础的二手资料研究。数据来源包括内容平台官方报告（抖音、巨量引擎、小红书）、目的地公开客流与消费数据（淄博）、以及行业研究机构报告（中国旅游研究院、携程）。</p>
+
+              <h4 class="proj__h">三、核心发现</h4>
+              <p><strong>发现一 · 历史叙事在平台流量逻辑下被边缘化。</strong>平台热度高度集中于打卡类内容：抖音「大学生特种兵旅游」话题播放量截至 2023 年 4 月已达 8.4 亿次，小红书同类笔记发布量在同期三周内增长逾 20 倍。内容平台已经成为旅游决策的第一入口——82.6% 的受访者表示会在消费前先在网上搜索种草推荐，74.4% 会借助互联网/App 解决旅行中遇到的问题。曝光资源的分配同样失衡：重庆李子坝轻轨穿楼、长沙茶颜悦色、淄博烧烤获得持续曝光，而淄博的历史文化资源、长沙贾谊故居、重庆上清寺缺乏同等声量。算法推荐强化高传播性内容，历史类内容因传播与变现效率偏低而流量不足，形成「越低流量越无人看」的循环，公众对城市历史的认知范围持续收窄。</p>
+              <p><strong>发现二 · 用户对城市的认知被单一打卡标签固化。</strong>打卡点在目的地宣传中优先级最高，叠加历史被边缘化，用户形成以打卡点为唯一衡量标准的认知惯性，忽略城市本身的历史纵深与文化多样性。技术手段在放大传播效率的同时强化了这一单一性：2023 年第一季度，抖音平台搜索旅游内容的次数同比增长 2.6 倍，用户的注意力进一步集中于已被验证的热门目的地。其他文化元素更难进入公众视野，城市历史叙事缺少完整的对外呈现。</p>
+              <p><strong>发现三 · 快节奏体验使历史叙事无法完成深度传递。</strong>2023 年淄博因烧烤走红，五一假期期间淄博站累计发送旅客超 24 万人次、旅客到达量约 24 万人次，当地旅游订单较 2019 年增长 441%，五一期间旅游业消费额环比 4 月增长 73%。但热度退潮同样迅速：巨量算数显示，淄博烧烤关键词搜索指数在 2023 年 4 月达到峰值 1105.79 万，至 6 月底已降至峰值的 1%；至 2023 年底，当地出租车司机日收入降至 110—150 元，张店区部分烧烤店饭点上座率不足一半、裁员约三分之二。短期流量难以转化为稳定的经济收益，对中小城市尤其如此；与此同时，淄博的历史叙事并未借这轮热度获得讲述机会。</p>
+              <p><strong>发现四 · 时间与精力的双重约束。</strong>特种兵式旅游的行程时长以 2—3 天为主，占 54.7%，1 天占 19.7%——合计约 74% 的行程在三天以内；2025 年国庆期间，该模式下平均每天打卡 8.3 个景点、步行 2.7 万步。一方面，休闲需求优先被「吃穿住行」满足，可用于了解城市的时间被压缩；另一方面，空闲时间大量被短视频占据，信息碎片化削弱了主动探索的意愿与能力。而历史叙事的实现需要系统性、完整性与深度投入——供需之间存在结构性错配。</p>
+
+              <h4 class="proj__h">四、深层成因：技术替代了「亲身实践」的必要性</h4>
+              <p>在互联网普及之前，了解一地历史必须亲历：与当地人交流、考察历史遗迹，认知过程系统而完整。诚如上个世纪 40 年代凯鲁亚克的《在路上》，即使身无分文也要搭便车南下，只为亲自去探索芝加哥、丹佛，用自己的脚步丈量美国不同的土地。而当世界连通为现在这样一个数字化整体，随处可见的高铁飞机、日益兴起的短视频文化，让人们足不出户也能尽览美景了解历史；即使是出门旅行，简化的互联网旅游攻略也常常削弱了人们主动深入了解一个城市的机会。技术提升了便利性，同时也削弱了躬行历史的必要性，历史叙事被裹挟进碎片化的时间洪流之中。</p>
+
+              <h4 class="proj__h">五、一个反向证据：需求并未消失</h4>
+              <p>中国旅游研究院《中国旅游景区度假区发展报告（2023—2024）》显示，节假日选择商业综合体、文博场馆和历史文化街区的游客占比达 20% 以上。同时，携程数据显示 2026 年暑期 1—3 天短途打卡出游占比降至 52.9%，4 天及以上长线慢游占比升至 47.1%。这意味着：历史内容的潜在需求依然存在，且市场正从「打卡」向「慢游」迁移——问题不在需求端，而在供给与传播方式。</p>
+
+              <h4 class="proj__h">六、理论视角</h4>
+              <p>Lewis Mumford 曾在《历史中的城市》一书中写道：「城市是时间的容器。」城市依附于历史而生，一个城市的历史是它最根本的生命源泉，往往随着城市发展而历久弥新。用户端的表现则是：人们知道重庆有李子坝轻轨穿楼，却可能从未思考过它是为何而建。</p>
+
+              <h4 class="proj__h">七、建议</h4>
+              <p>针对上述发现，可以从城市宣传、社会政策、个人意识三个层面提出建议。</p>
+              <p><strong>1. 城市宣传多元化。</strong>挖掘历史、科技、民俗等多元主题，降低对单一网红标签的依赖，从而应对游客需求升级、维持城市新鲜感，并可能为城市发展发现新的方向。</p>
+              <p><strong>2. 历史遗迹与现代旅游结合。</strong>将历史文化纳入宣传重点，以故事化、场景化的手段呈现城市的起源、发展与变迁。以成都为例——起源看金沙遗址，发展看武侯祠，变迁看锦里，现代化看春熙路·太古里。</p>
+              <p><strong>3. 融合现代技术。</strong>截取历史叙事中的关键节点，借助全息投影、互动展览等参与度较高的技术形式，让历史叙事在宣传阶段即形成认知雏形，激发后续的探索意愿。</p>
+              <p><strong>4. 社会政策支持。</strong>通过文化旅行补贴降低出行成本，减少因经济压力导致的仓促打卡；通过增加假期提供可支配时间，推动错峰出行、缓解节假日拥堵，创造更从容的游览环境——让城市历史本身有机会被真正看见和感受。</p>
+              <p><strong>5. 规划主题旅行路线。</strong>沿城市发展时间轴设计「追古朔今」主题路线；追踪单一文化产物的演变，设计专题历史沉浸路线；面向不同兴趣人群设计差异化路线，并融合 AR 等技术增强实感。</p>
+              <p><strong>6. 提升个人意识。</strong>减少碎片化信息消费，降低对短视频的依赖，通过阅读、纪录片等补充认知；同时把视频平台当作补充认知的工具，而非困于信息茧房。</p>
+
+              <h4 class="proj__h">八、结论</h4>
+              <p>网红城市是社会发展、经济与科技进步的必然产物，无法回避。但城市的历史叙事是其最本真、最原始的模样，不应被忽视——「当我们抹去一座建筑的历史痕迹，等于撕掉一页人类的日记。」通过宣传多元化、政策支持与个人意识提升的共同作用，可以推动城市历史叙事的重构与复兴。</p>
+            </div>
+          </li>
+
+        </ul>
+
+        <p class="note">
+          <span class="note__en">click each to know details</span>
+          <span class="note__cn">点击查看详情</span>
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ─── 点卡片后的全屏详情：点的那张卡自己长大铺满，跟着鼠标动 ─── -->
+  <div class="detail" id="detail" aria-hidden="true">
+    <div class="detail__slide">
+      <article class="detail__card" role="dialog" aria-modal="true" aria-label="Experience detail">
+        <button class="detail__close" id="detailClose" type="button" aria-label="Close">&#10005;</button>
+        <div class="detail__body" id="detailBody"></div>
+      </article>
+    </div>
+  </div>
+
+  <footer class="taskbar">
+    <span class="taskbar__brand">LEASON.OS</span>
+    <a class="taskbar__mail" href="mailto:Leason041900@gmail.com">Leason041900@gmail.com</a>
+    <span class="taskbar__clock" id="clock">--:--</span>
+  </footer>
+
+</section>
+
+<script src="js/main.js"></script>
+</body>
+</html>

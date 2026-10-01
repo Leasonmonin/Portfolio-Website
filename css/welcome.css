@@ -1,0 +1,242 @@
+/* ══════════════════════════════════════════════════════════
+   welcome.css — 开机动画 + 登录场景
+   黑白灰版：黑屋子 + 发白光的笔记本屏幕
+   ══════════════════════════════════════════════════════════ */
+
+.welcome{
+  position:fixed; inset:0; z-index:30;
+  display:grid; place-items:center;
+  overflow:hidden;
+  background:radial-gradient(130% 92% at 50% 44%, #141414 0%, #080808 48%, var(--void) 100%);
+}
+
+/* ── 底噪：向心淡出的细网格（原来那层像素星点去掉了） ───── */
+.welcome::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.055) 0 1px, transparent 1px 48px),
+    repeating-linear-gradient(0deg,  rgba(255,255,255,.055) 0 1px, transparent 1px 48px);
+  -webkit-mask-image:radial-gradient(68% 58% at 50% 50%, #000 0%, transparent 80%);
+          mask-image:radial-gradient(68% 58% at 50% 50%, #000 0%, transparent 80%);
+}
+
+/* ── 舞台 ───────────────────────────────────────────────── */
+.stage{
+  position:absolute; inset:0;
+  display:grid; place-items:center;
+  transform-origin:50% 50%;
+  transition:transform .9s cubic-bezier(.62,0,.86,.18);
+}
+.welcome.is-booting .stage{ transform:scale(6.5); }
+
+
+/* ══════════════════════════════════════════════════════════
+   笔记本电脑（正面视角，扁平细线）
+   ══════════════════════════════════════════════════════════ */
+.laptop{
+  position:relative;
+  width:min(860px, 82vw);
+  opacity:0;
+  filter:brightness(.62) saturate(0);
+  transition:opacity 1.15s ease, filter 1.15s ease;
+  will-change:opacity, filter;
+}
+.laptop.is-on{ opacity:1; filter:none; }
+
+.laptop__screen{
+  position:relative;
+  aspect-ratio:16 / 10;
+  padding:10px;
+  background:#1a1a1a;
+  border:1px solid #3a3a3a;
+  border-radius:4px;
+  box-shadow:0 0 54px rgba(255,255,255,.22);
+}
+
+.laptop__led{
+  position:absolute; right:14px; bottom:5px;
+  width:4px; height:4px;
+  border-radius:50%;
+  background:#ffffff;
+  animation:led 2.6s ease-in-out infinite;
+}
+@keyframes led{ 50%{ opacity:.25; } }
+
+/* 屏幕内里 —— 纸白，像一张亮着的稿纸 */
+.screen{
+  position:relative;
+  height:100%;
+  overflow:hidden;
+  border-radius:2px;
+  background:
+    radial-gradient(130% 130% at 50% 0%, #ffffff 0%, #f4f4f4 46%, #e4e4e4 100%);
+  box-shadow:inset 0 0 30px rgba(0,0,0,.12);
+}
+/* 只有一片玻璃反光，扫描线去掉了 */
+.screen::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(102deg, rgba(255,255,255,.72) 0%, transparent 42%);
+}
+
+/* 大字缩回来的落点（只提供几何，不渲染内容） */
+.screen__slot{
+  position:absolute; left:50%; top:38%;
+  width:60%; height:0;
+  transform:translate(-50%,-50%);
+}
+
+/* LOG IN —— 居中。白屏上一颗黑按钮 */
+.login{
+  position:absolute; left:50%; top:56%;
+  transform:translate(-50%,-50%);
+  display:flex; align-items:center; gap:.9em;
+  padding:calc(var(--px) * 3.4) calc(var(--px) * 5.5);
+  background:#111111;
+  color:#ffffff;
+  font-family:var(--font-label);
+  font-size:clamp(10px, 1.4vw, 17px);
+  letter-spacing:.14em;
+  border:1px solid #111111;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.3),
+    0 6px 20px rgba(0,0,0,.28);
+  opacity:0;
+}
+.login.is-on{ animation:rise .6s ease forwards, blink 1.15s steps(1,end) 1s infinite; }
+.login:hover{
+  background:#ffffff; color:#111111; border-color:#111111;
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,.16),
+    0 10px 28px rgba(0,0,0,.42);
+}
+.login:active{ transform:translate(-50%,-50%) translateY(1px); }
+.login:focus-visible{ outline:1px solid #111111; outline-offset:2px; }
+
+@keyframes blink{
+  0%, 62%   { opacity:1;    }
+  63%, 100% { opacity:.18;  }
+}
+.login__caret{ animation:caret 1.15s steps(1,end) infinite; }
+@keyframes caret{ 0%,49%{ opacity:1 } 50%,100%{ opacity:0 } }
+
+/* 底部居中的邮箱 */
+.screen__mail{
+  position:absolute; left:50%; top:87%;
+  transform:translate(-50%,-50%);
+  margin:0;
+  font-family:var(--font-ui);
+  font-size:clamp(12px, 1.35vw, 19px);
+  letter-spacing:.1em;
+  white-space:nowrap;
+  color:#3a3a3a;
+  opacity:0;
+}
+.screen__mail.is-on{ animation:rise .7s ease forwards; }
+/* 白屏上得用深的那支蓝紫，亮的那支会糊掉看不见 */
+.screen__mail a{
+  text-decoration:none;
+  background-image:var(--grad-brand-ink);
+  -webkit-background-clip:text;
+          background-clip:text;
+  color:transparent;
+  border-bottom:1px solid rgba(0,0,0,.45);
+  padding-bottom:.15em;
+}
+.screen__mail a:hover{ border-bottom-color:#6d28d9; }
+
+/* 底盖 + 转轴。去掉了键盘条纹，只留一道细边 */
+.laptop__base{
+  position:relative;
+  width:108%; margin-left:-4%;
+  height:14px;
+  background:linear-gradient(#2e2e2e, #1c1c1c);
+  border-top:1px solid #3d3d3d;
+  border-radius:0 0 6px 6px;
+  clip-path:polygon(1.6% 0, 98.4% 0, 100% 100%, 0 100%);
+  box-shadow:0 10px 30px rgba(0,0,0,.55);
+}
+.laptop__hinge{
+  position:absolute; left:50%; top:0;
+  width:12%; height:3px;
+  transform:translateX(-50%);
+  border-radius:0 0 3px 3px;
+  background:#4a4a4a;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   开场大字
+   —— 黑底上是白的，落到白屏上时跟着变黑（像墨迹显影）
+   ══════════════════════════════════════════════════════════ */
+.wordmark{
+  position:absolute; left:50%; top:50%;
+  margin:0;
+  width:max-content;
+  max-width:92vw;
+  font-family:var(--font-label);
+  font-weight:300;
+  font-size:clamp(16px, 4.4vw, 70px);
+  line-height:1.2;
+  letter-spacing:-.005em;
+  text-align:center;
+  color:#ffffff;
+  text-shadow:
+    0 0  1px #ffffff,
+    0 0 10px rgba(255,255,255,.9),
+    0 0 32px rgba(255,255,255,.55);
+  z-index:10;
+  pointer-events:none;
+  transform-origin:50% 50%;
+  transform:translate(-50%,-50%) translate(0,0) scale(1);
+  transition:
+    transform 1.45s cubic-bezier(.55,.02,.3,1),
+    filter    1.45s ease,
+    color     1.45s ease,
+    text-shadow 1.45s ease;
+  will-change:transform;
+}
+
+.wordmark span{
+  display:inline-block;
+  opacity:0;
+  animation:rise .52s cubic-bezier(.2,.9,.2,1) forwards;
+  animation-delay:calc(var(--i) * 30ms);
+}
+
+.wordmark.is-receded{
+  transform:translate(-50%,-50%)
+            translate(var(--dx,0), var(--dy,0))
+            scale(var(--s,1));
+  color:#111111;
+  filter:blur(.7px) brightness(.92);
+  text-shadow:
+    0 0 1px rgba(255,255,255,.9),
+    0 0 6px rgba(255,255,255,.6),
+    0 2px 8px rgba(0,0,0,.16);
+}
+
+
+/* 镜头吸入之后就整屏淡出，不再有 CRT 闪白 */
+.welcome.is-booting{ animation:welGone .5s ease .62s forwards; }
+@keyframes welGone{ to{ opacity:0; } }
+
+
+/* ══════════════════════════════════════════════════════════
+   开发用：冻结动画，直接停在登录屏最终状态（URL 加 #login）
+   ══════════════════════════════════════════════════════════ */
+.welcome.is-frozen .wordmark{ transition:none; }
+.welcome.is-frozen .wordmark span,
+.welcome.is-frozen .screen__mail,
+.welcome.is-frozen .login,
+.welcome.is-frozen .login__caret,
+.welcome.is-frozen .laptop__led{ animation:none; opacity:1; }
+
+
+/* ══════════════════════════════════════════════════════════
+   窄屏
+   ══════════════════════════════════════════════════════════ */
+@media (max-width:640px){
+  .laptop{ width:94vw; }
+  .screen__slot{ width:66%; }
+  .login{ padding:calc(var(--px)*2.5) calc(var(--px)*4); }
+}

@@ -1,0 +1,81 @@
+/* ══════════════════════════════════════════════════════════
+   base.css — 变量 / reset / 共用像素原件
+   黑白灰版：开场纯黑，桌面纸白，详情满屏黑
+   ══════════════════════════════════════════════════════════ */
+
+:root{
+  /* 开场：黑 */
+  --void:      #000000;
+  --navy-1:    #0d0d0d;
+  --navy-2:    #151515;
+  --navy-3:    #1b1b1b;
+  --bezel:     #262626;
+  --bezel-lit: #3d3d3d;
+
+  /* 登录之后：纸白渐变 */
+  --grad-a: #e9e9e9;
+  --grad-b: #f4f4f4;
+  --grad-c: #ffffff;
+  --grad-d: #dcdcdc;
+
+  --ink:     #f2f2f2;   /* 黑底上的字（开场屏用） */
+  --ink-dim: #8e8e8e;
+  --ink-hi:  #ffffff;
+
+  /* 桌面是亮的，正文反过来用深色 */
+  --paper:   #ffffff;
+  --paper-2: #f2f2f2;
+  --rule:    #111111;
+  --rule-2:  #c9c9c9;
+  --type:    #111111;
+  --type-mid:#4a4a4a;
+  --type-dim:#8a8a8a;
+
+  /* 黑白灰里唯一的一抹彩色。黑底上用亮的那支，白底上用深的那支 */
+  --grad-brand:     linear-gradient(96deg, #6f7bff 0%, #a879ff 46%, #d09aff 100%);
+  --grad-brand-ink: linear-gradient(96deg, #3f34c9 0%, #6d28d9 52%, #9333ea 100%);
+
+  --px: 4px;                        /* 间距单位，改动这里可整体缩放留白 */
+
+  /* 全站西文统一 Inter —— 跟那颗 LOG IN 按钮同一支，没有第二支西文字体。
+     中文排在后面兜底，英文元素里混到中文时不会掉到系统默认 */
+  --font-label: "Inter", "Helvetica Neue", Arial,
+                "DengXian", "等线", "Microsoft YaHei", sans-serif;
+  --font-ui: "Inter", "Helvetica Neue", Arial,
+             "DengXian", "等线", "Microsoft YaHei", sans-serif;
+  /* 中文：等线 */
+  --font-cjk: "DengXian", "等线", "Microsoft YaHei",
+              "PingFang SC", sans-serif;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  background:var(--void);
+  color:var(--ink);
+  font-family:var(--font-label);
+  /* 全站西文走 Inter Light。等线的正文在 desktop.css 里单独拉回 400，
+     不然中文会跟着一起变细 */
+  font-weight:300;
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+
+/* 开场用的逐字上浮 */
+@keyframes rise{
+  from{ opacity:0; transform:translateY(.4em); }
+  to  { opacity:1; transform:none; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}

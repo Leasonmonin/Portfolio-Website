@@ -1,0 +1,1019 @@
+/* ══════════════════════════════════════════════════════════
+   desktop.css — 登录之后的"桌面"
+   左：侧栏三个标签   右：Education / Skills / Experience
+   黑白灰 / 杂志海报版：黑框 + 纸白页面 + 满屏黑详情
+   ══════════════════════════════════════════════════════════ */
+
+.desktop{
+  position:fixed; inset:0; z-index:10;
+  visibility:hidden; opacity:0;
+  transition:opacity .6s ease, transform .6s cubic-bezier(.2,.8,.2,1);
+  transform:scale(1.06);
+  color:var(--type);
+  background:linear-gradient(160deg,
+    var(--grad-a) 0%, var(--grad-b) 34%, var(--grad-c) 68%, var(--grad-d) 100%);
+}
+.desktop.is-on{ visibility:visible; opacity:1; transform:none; }
+
+.desktop__sky{
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(60% 40% at 18% 12%, rgba(255,255,255,.7) 0%, transparent 62%),
+    radial-gradient(56% 44% at 84% 22%, rgba(255,255,255,.55) 0%, transparent 64%),
+    radial-gradient(70% 46% at 50% 104%, rgba(0,0,0,.10) 0%, transparent 66%);
+}
+
+.desktop__grid{
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    repeating-linear-gradient(90deg, rgba(0,0,0,.055) 0 1px, transparent 1px 56px),
+    repeating-linear-gradient(0deg,  rgba(0,0,0,.055) 0 1px, transparent 1px 56px);
+  -webkit-mask-image:radial-gradient(78% 72% at 50% 46%, #000 0%, transparent 86%);
+          mask-image:radial-gradient(78% 72% at 50% 46%, #000 0%, transparent 86%);
+}
+
+.shell{
+  position:absolute; inset:0 0 44px 0;
+  display:grid;
+  grid-template-columns:188px 1fr;
+}
+
+
+/* ── 等线的正文保持 Regular ─────────────────────────────
+   基重设成 300 是为了西文走 Inter Light，中文不该跟着一起变细，
+   所以凡是走 --font-cjk 的「正文」在这里拉回 400。
+   标题类的（paper__name / card__title / cell__org / fact dt）本来自带 700，不用管 */
+.fact dd, .paper__meta, .card__text, .cell__tag, .cell__list, .tab__cn{
+  font-weight:400;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   左侧栏 —— 不是一条直边黑框，是「圆环最右的一段弧」
+   圆心在屏幕外很左边（-1150px），侧栏里只露出弧顶那一段，
+   所以右缘中间最宽、上下往回缩。弧外面再糊一层灰过渡到内容区。
+   半径和圆心改这两个变量，弧的形状跟着变
+   ══════════════════════════════════════════════════════════ */
+.side{
+  position:relative; z-index:1;
+  display:flex; flex-direction:column; gap:calc(var(--px) * 2);
+  padding:calc(var(--px) * 6) calc(var(--px) * 3.5);
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  background:none;
+}
+
+/* 弧：径向渐变本身就是那个圆，渐变到透明的地方就是弧消失的地方，
+   不用 clip-path，边上不会出现一条硬切线。
+   半径 1300、圆心在 −1050：弧的最宽处落在 250，正好比 188 的栏宽多出一点，
+   渐变到栏外才淡完；基色只有 .82，网格能透上来 */
+.side__veil{
+  position:absolute; left:0; top:0; bottom:0; width:300px; z-index:0;
+  pointer-events:none;
+  background:radial-gradient(circle 1300px at -1050px 50%,
+    rgba(6,6,6,.82) 0%, rgba(6,6,6,.82) 90%,
+    rgba(6,6,6,.74) 95%, rgba(9,9,9,.40) 97.5%, rgba(12,12,12,0) 100%);
+}
+
+/* 弧外面那圈灰：把内容区的网格糊掉，再从灰淡到没有。
+   mask 让模糊本身也渐渐消失（不然会看到一条直边的模糊带）。
+   起点跟着栏宽走：左边 78 是栏缘（188）往回退 110，灰从那儿开始铺 */
+.side__haze{
+  position:absolute; left:78px; top:0; bottom:0; width:280px; z-index:0;
+  pointer-events:none;
+  background:linear-gradient(90deg,
+    rgba(26,26,26,.26) 0%, rgba(60,60,60,.15) 38%,
+    rgba(102,102,102,.05) 72%, transparent 100%);
+  -webkit-backdrop-filter:blur(14px);
+          backdrop-filter:blur(14px);
+  -webkit-mask-image:linear-gradient(90deg, #000 0%, rgba(0,0,0,.68) 32%, transparent 100%);
+          mask-image:linear-gradient(90deg, #000 0%, rgba(0,0,0,.68) 32%, transparent 100%);
+}
+.side::-webkit-scrollbar{ width:8px; }
+.side::-webkit-scrollbar-track{ background:rgba(255,255,255,.06); }
+.side::-webkit-scrollbar-thumb{ background:#3d3d3d; }
+
+.side__top{
+  display:flex; align-items:center; gap:calc(var(--px) * 2.5);
+  padding:0 calc(var(--px) * 1.5);
+}
+
+/* 整站唯一的一抹彩色：名字走蓝紫渐变 */
+.side__brand{
+  font-family:var(--font-label);
+  font-size:12px;
+  font-weight:300;
+  letter-spacing:.16em;
+  background-image:var(--grad-brand);
+  -webkit-background-clip:text;
+          background-clip:text;
+  color:transparent;
+}
+
+/* 左上角：回首页（登录屏）的箭头 */
+.back-home{
+  display:grid; place-items:center;
+  width:calc(var(--px) * 8); height:calc(var(--px) * 8);
+  border:1px solid rgba(255,255,255,.4);
+  background:rgba(255,255,255,.06);
+  color:#d6d6d6;
+  transition:background .18s ease, border-color .18s ease,
+             color .18s ease, transform .18s ease;
+}
+.back-home:hover{
+  background:#ffffff;
+  border-color:#ffffff; color:#111111;
+  transform:translateX(calc(var(--px) * -1));
+}
+.back-home:focus-visible{ outline:2px solid #ffffff; outline-offset:2px; }
+/* 箭头本体用边框拼，不依赖字体里有没有这个字形 */
+.back-home__arrow{
+  width:0; height:0;
+  border-top:calc(var(--px) * 1.4) solid transparent;
+  border-bottom:calc(var(--px) * 1.4) solid transparent;
+  border-right:calc(var(--px) * 2.1) solid currentColor;
+}
+
+/* 转轮：三条标签骑在一段圆弧上，中间那条是当前面板，上下两条往回缩、自转、淡下去。
+   弧的位移和角度由 JS 按同一个半径算（见 main.js 的 ARC_R），这里只提供窗口和淡出。
+   窗口高度要装得下最外那条：STEP * 1 + 标签半数高度，别让 mask 把它首尾吃掉 */
+.side__wheel{
+  position:relative;
+  height:calc(var(--px) * 125);
+  margin:auto 0;                     /* 竖向居中，上面留给 LEASON */
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 7%, #000 93%, transparent 100%);
+          mask-image:linear-gradient(to bottom, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+
+.tab{
+  position:absolute; left:0; right:0; top:50%;
+  display:grid;
+  grid-template-columns:26px 1fr;
+  grid-template-rows:auto auto;
+  align-items:center;
+  column-gap:.75em;
+  row-gap:.45em;
+  padding:calc(var(--px) * 3) calc(var(--px) * 2.5);
+  border:1px solid transparent;
+  text-align:left;
+  color:#b4b4b4;
+  opacity:.4;
+  transform:translateY(-50%);
+  transform-origin:50% 50%;
+  will-change:transform, opacity;
+  transition:
+    transform .45s cubic-bezier(.34,1.2,.64,1),
+    opacity   .4s  ease,
+    background .18s ease, border-color .18s ease, color .18s ease;
+}
+.tab:hover{ background:rgba(255,255,255,.12); color:#ffffff; }
+.tab:focus-visible{ outline:2px solid #ffffff; outline-offset:2px; }
+
+/* 当前那条：黑栏里翻出一块白牌子 */
+.tab.is-active{
+  background:#ffffff;
+  border-color:#ffffff;
+  color:#111111;
+  box-shadow:none;
+}
+
+/* 侧栏图标：细线描边，内容由 JS 注入 SVG。颜色跟着 .tab 的 color 走 */
+.tab__art{
+  grid-row:1 / span 2;
+  display:block;
+  width:26px; height:26px;
+}
+.tab__art svg{ display:block; width:100%; height:100%; }
+
+.tab__en{
+  font-family:var(--font-label);
+  font-size:11px;
+  letter-spacing:.08em;
+  line-height:1.4;
+}
+.tab__cn{
+  font-family:var(--font-cjk);
+  font-size:12px;
+  letter-spacing:.06em;
+  opacity:.75;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   内容区
+   ══════════════════════════════════════════════════════════ */
+.panels{ position:relative; overflow:hidden; }
+
+.panel{
+  position:absolute; inset:0;
+  display:none;
+  padding:calc(var(--px) * 7) calc(var(--px) * 8);
+  overflow-y:auto;
+  overscroll-behavior:contain;
+}
+.panel.is-active{ display:block; animation:panelIn .34s cubic-bezier(.2,.85,.2,1); }
+/* 经历那栏要让环占满剩下的高度（沉浸式，不滚动） */
+#panel-experience.is-active{ display:flex; flex-direction:column; overflow:hidden; }
+@keyframes panelIn{ from{ opacity:0; transform:translateY(14px); } }
+
+.panel::-webkit-scrollbar{ width:10px; }
+.panel::-webkit-scrollbar-track{ background:rgba(0,0,0,.06); }
+.panel::-webkit-scrollbar-thumb{ background:#b0b0b0; border:2px solid transparent; background-clip:content-box; }
+
+/* 页眉：西文标题靠左，中文的小标签贴到内页右上角 */
+.panel__head{
+  display:flex; align-items:baseline; justify-content:space-between; gap:1em;
+  margin-bottom:calc(var(--px) * 7);
+  padding-bottom:calc(var(--px) * 3.5);
+  border-bottom:1px solid rgba(0,0,0,.22);
+}
+.panel__en{
+  margin:0;
+  font-family:var(--font-label);
+  font-weight:300;
+  font-size:clamp(22px, 3vw, 42px);
+  line-height:1.05;
+  letter-spacing:.01em;
+  color:var(--type);
+  text-shadow:none;
+}
+.panel__cn{
+  flex:0 0 auto;
+  font-family:var(--font-cjk);
+  font-size:clamp(12px, 1.2vw, 15px);
+  font-weight:400;
+  letter-spacing:.34em;
+  color:var(--type-dim);
+}
+
+
+/* ── 卡片 / 文件夹下面那行提示 ───────────────────────────
+   西文一行、中文一行，都是灰的。面板里居中放，环的任务栏里塞在两枚箭头中间 */
+.note{
+  display:flex; flex-direction:column; align-items:center; gap:.45em;
+  margin:calc(var(--px) * 8) 0 0;
+  text-align:center;
+}
+.note__en{
+  font-family:var(--font-label);
+  font-size:11px;
+  letter-spacing:.14em;
+  color:#9a9a9a;
+}
+.note__cn{
+  font-family:var(--font-cjk);
+  font-size:12px;
+  font-weight:400;
+  letter-spacing:.3em;
+  color:#adadad;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   EDUCATION — 档案夹（白卡纸）
+   ══════════════════════════════════════════════════════════ */
+/* 上边留的空当原本是那颗 PULL 按钮占的（按钮 ~32 + 下边距 44）。
+   按钮撤了之后文件夹整个会往上顶，这里用 margin 把那段高度补回来，
+   不然纸一抽出来就贴到页眉那道线上 */
+.folder{
+  position:relative;
+  max-width:720px;
+  margin:calc(var(--px) * 19) auto 0;
+}
+
+.folder__body{ position:relative; }
+
+/* 文件夹标签：从舞台上方探出来 */
+.folder__tab{
+  position:absolute; left:calc(var(--px) * 5); top:calc(var(--px) * -4.6);
+  z-index:3;
+  padding:calc(var(--px) * 1.2) calc(var(--px) * 3.5);
+  font-family:var(--font-label);
+  font-size:10px;
+  letter-spacing:.12em;
+  color:#ffffff;
+  background:#111111;
+  border:1px solid #111111;
+  border-bottom:0;
+  box-shadow:none;
+}
+.folder.is-opening .folder__tab,
+.folder.is-open    .folder__tab,
+.folder.is-closing .folder__tab{ background:#3d3d3d; }
+/* 纸抽出来之后就压在标签前面了，标签得退到纸后面去 */
+.folder.is-open    .folder__tab,
+.folder.is-closing .folder__tab{ z-index:0; }
+
+/* 舞台：开口。封面滑出去的那一路还得靠它裁着，等封面走干净了才放开
+   （见 .is-open / .is-closing 的 overflow），那时候纸才能探到文件夹外面 */
+.folder__stage{
+  position:relative;
+  overflow:hidden;
+  z-index:1;                 /* 压住页眉那条分隔线，纸抽出来时先从它背后过 */
+  padding:calc(var(--px) * 3);
+  /* 白卡纸 */
+  background:
+    repeating-linear-gradient(92deg, rgba(0,0,0,.035) 0 2px, transparent 2px 5px),
+    linear-gradient(168deg, #ffffff 0%, #f0f0f0 62%, #e2e2e2 100%);
+  border:1px solid #111111;
+  box-shadow:
+    inset 0 0 34px rgba(0,0,0,.07),
+    0 15px 32px rgba(0,0,0,.24),
+    0 2px 6px rgba(0,0,0,.12);
+}
+.folder.is-open .folder__stage,
+.folder.is-closing .folder__stage{ overflow:visible; }
+
+/* 封面本身就是要点的那个东西 —— 没有 PULL 按钮了，
+   整块封面就是触发区，点一下向上抽走 */
+.folder__cover{
+  position:absolute; inset:0; z-index:2;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1em;
+  width:100%; padding:0;
+  background:
+    repeating-linear-gradient(92deg, rgba(0,0,0,.035) 0 2px, transparent 2px 5px),
+    linear-gradient(168deg, #ffffff 0%, #f0f0f0 62%, #e2e2e2 100%);
+  box-shadow:inset 0 0 46px rgba(0,0,0,.08);
+  cursor:pointer;
+  transition:transform .78s cubic-bezier(.45,.05,.2,1);
+}
+.folder__cover:focus-visible{ outline:2px solid #111111; outline-offset:-6px; }
+.folder__cover:focus-visible .folder__coverText{ color:#000000; }
+.folder.is-opening .folder__cover,
+.folder.is-open    .folder__cover,
+.folder.is-closing .folder__cover{ transform:translateY(-101%); }
+/* 封面抽出去之后就一直藏在舞台外面。不藏的话，等 overflow 一放开，
+   它整个会重新画到文件夹上方去（它就是舞台那么高，-101% 正好落在上面）。
+   用 visibility 而不是 opacity：它是跳变的，不会跟着过渡浮出来一瞬 */
+.folder.is-open    .folder__cover,
+.folder.is-closing .folder__cover{ visibility:hidden; }
+
+.folder__coverText{
+  font-family:var(--font-cjk);
+  font-weight:400;
+  font-size:clamp(15px, 1.9vw, 26px);
+  letter-spacing:.3em;
+  text-indent:.3em;         /* letter-spacing 会在右边多留一格，缩回来才真居中 */
+  color:#111111;
+  text-shadow:none;
+  transition:color .18s ease;
+}
+.folder__cover:hover .folder__coverText{ color:#000000; }
+
+/* 里面的"档案纸"。只动 transform，不动布局 ——
+   这样文件夹会一直保持原来那圈大小，纸抽出去之后底下那片白卡纸
+   就空出来了，正好是"抽走纸的空文件夹" */
+.paper{
+  position:relative;
+  padding:calc(var(--px) * 6) calc(var(--px) * 6);
+  background-color:#ffffff;
+  /* 纸上的横线 */
+  background-image:repeating-linear-gradient(to bottom,
+    transparent 0 31px, rgba(0,0,0,.09) 31px 32px);
+  border:2px solid #111111;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.7);
+  /* 缩放锚在底边中点：纸是从文件夹开口往上被拽出来的，
+     锚底边才会像"抽"，锚中心就变成"原地膨胀"了 */
+  transform-origin:50% 100%;
+  transition:transform .78s cubic-bezier(.34,1.12,.5,1),
+             box-shadow .6s ease;
+}
+/* 抽出来：抬高 + 放大一圈，影子跟着拉开，看着才像离开了桌面。
+   黑白版里纸和文件夹都是白的，光靠明度分不开，影子得压重点 */
+.folder.is-open .paper{
+  transform:translateY(-22px) scale(1.06);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.7),
+             0 22px 40px rgba(0,0,0,.34),
+             0 4px 10px rgba(0,0,0,.22);
+}
+.paper__name{
+  margin:0 0 .35em;
+  font-family:var(--font-cjk);
+  font-size:clamp(22px, 2.6vw, 34px);
+  font-weight:700;
+  letter-spacing:.02em;
+  color:#000000;
+}
+.paper__meta{
+  margin:0 0 calc(var(--px) * 5);
+  font-family:var(--font-cjk);
+  font-size:14px;
+  letter-spacing:.1em;
+  color:#666666;
+}
+
+.facts{ margin:0; display:grid; gap:calc(var(--px) * 4.5); }
+.fact{
+  display:grid;
+  grid-template-columns:62px 1fr;
+  gap:1em;
+  align-items:start;
+}
+.fact dt{
+  font-family:var(--font-cjk);
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.16em;
+  color:#111111;
+  padding-top:.15em;
+}
+.fact dd{
+  margin:0;
+  font-family:var(--font-cjk);
+  font-size:15.5px;
+  line-height:1.85;
+  letter-spacing:.03em;
+  color:#333333;
+}
+.sep{ color:#c2c2c2; padding:0 .35em; }
+
+
+/* ══════════════════════════════════════════════════════════
+   SKILLS — 三张堆叠卡片
+   ══════════════════════════════════════════════════════════ */
+.deck{
+  position:relative;
+  max-width:660px;
+  margin:0 auto;
+  padding:0;
+  list-style:none;
+}
+
+.card{
+  position:relative;
+  padding:calc(var(--px) * 6) calc(var(--px) * 7);
+  margin-bottom:calc(var(--px) * -3);      /* 互相压叠 */
+  background:#ffffff;
+  border:1px solid #111111;
+  box-shadow:
+    0 14px 28px rgba(0,0,0,.20),
+    0 2px 6px rgba(0,0,0,.08);
+  transform-origin:50% 100%;
+  cursor:pointer;
+  transition:transform .3s cubic-bezier(.2,.85,.2,1), box-shadow .3s ease, margin .3s ease;
+}
+.card:focus-visible{ outline:2px solid #111111; outline-offset:3px; }
+/* 三张各自歪一点，像随手摞在桌上 */
+.card:nth-child(1){ transform:rotate(-.9deg); z-index:1; }
+.card:nth-child(2){ transform:rotate(.7deg);  z-index:2; }
+.card:nth-child(3){ transform:rotate(-.5deg); z-index:3; }
+
+.card:hover,
+.card:focus-within{
+  transform:rotate(0deg) translateY(calc(var(--px) * -3)) scale(1.015);
+  box-shadow:
+    0 24px 46px rgba(0,0,0,.28),
+    0 3px 8px rgba(0,0,0,.10);
+  z-index:9;
+}
+
+/* 大号编号，像目录 */
+.card__no{
+  display:block;
+  font-family:var(--font-label);
+  font-weight:300;
+  font-size:30px;
+  line-height:1;
+  letter-spacing:.02em;
+  color:#d0d0d0;
+  text-shadow:none;
+  margin-bottom:.4em;
+}
+.card__title{
+  margin:0 0 .7em;
+  font-family:var(--font-cjk);
+  font-size:clamp(18px, 2vw, 24px);
+  font-weight:700;
+  letter-spacing:.02em;
+  color:#000000;
+}
+.card__text{
+  margin:0 0 .6em;
+  font-family:var(--font-cjk);
+  font-size:15px;
+  line-height:1.9;
+  letter-spacing:.02em;
+  color:#3d3d3d;
+}
+.card__text:last-child{ margin-bottom:0; }
+/* 强调不靠字重（全站西文只有 Light / Regular 两级），
+   靠那条灰色高亮带和纯黑，字重跟正文一样就够 */
+.card__text strong{
+  font-weight:400;
+  color:#000000;
+  background:linear-gradient(transparent 62%, #d6d6d6 62%);
+  padding:0 .15em;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   PROJECTS — 作品卡
+   卡片上只露摘要，整篇正文塞在 .proj__full 里（这里 display:none），
+   点开进详情层再由下面的规则放出来。这样切页、排版都不用另做一套
+   ══════════════════════════════════════════════════════════ */
+.deck--proj{
+  max-width:760px;
+  display:grid;
+  gap:calc(var(--px) * 5);
+}
+
+.proj{
+  position:relative;
+  padding:calc(var(--px) * 6) calc(var(--px) * 7);
+  background:#ffffff;
+  border:1px solid #111111;
+  box-shadow:
+    0 14px 28px rgba(0,0,0,.20),
+    0 2px 6px rgba(0,0,0,.08);
+  cursor:pointer;
+  transition:transform .3s cubic-bezier(.2,.85,.2,1), box-shadow .3s ease;
+}
+.proj:hover,
+.proj:focus-within{
+  transform:translateY(calc(var(--px) * -3));
+  box-shadow:
+    0 24px 46px rgba(0,0,0,.28),
+    0 3px 8px rgba(0,0,0,.10);
+}
+.proj:focus-visible{ outline:2px solid #111111; outline-offset:3px; }
+
+.proj__no{
+  display:block;
+  font-family:var(--font-label);
+  font-weight:300;
+  font-size:26px;
+  line-height:1;
+  letter-spacing:.02em;
+  color:#d0d0d0;
+  margin-bottom:.4em;
+}
+.proj__title{
+  margin:0 0 .35em;
+  font-family:var(--font-cjk);
+  font-size:clamp(18px, 2vw, 24px);
+  font-weight:700;
+  letter-spacing:.02em;
+  color:#000000;
+}
+.proj__sub{
+  margin:0 0 .8em;
+  font-family:var(--font-cjk);
+  font-size:13px;
+  letter-spacing:.06em;
+  color:#8a8a8a;
+}
+.proj__text{
+  margin:0;
+  font-family:var(--font-cjk);
+  font-size:15px;
+  line-height:1.9;
+  letter-spacing:.02em;
+  color:#3d3d3d;
+}
+
+/* 正文只在详情层里出现 */
+.proj__full{ display:none; }
+
+/* ── 详情层里的作品卡：白壳脱掉，正文放出来 ─────────────── */
+.detail__body .proj{
+  width:100%; margin:0; padding:0;
+  background:none; border:0; box-shadow:none;
+  transform:none;
+  cursor:default;
+}
+.detail__body .proj:hover{ transform:none; box-shadow:none; }
+
+.detail__body .proj__no{ font-size:clamp(38px, 5vw, 68px); color:#3a3a3a; margin-bottom:.25em; }
+.detail__body .proj__title{ font-size:clamp(24px, 3.4vw, 46px); line-height:1.24; color:#ffffff; }
+.detail__body .proj__sub{ font-size:clamp(14px, 1.3vw, 18px); color:#8a8a8a;
+                          margin-bottom:calc(var(--px) * 7); }
+.detail__body .proj__text{ font-size:clamp(15px, 1.3vw, 19px); line-height:2; color:#c4c4c4; }
+
+.detail__body .proj__full{
+  display:block;
+  margin-top:calc(var(--px) * 9);
+  padding-top:calc(var(--px) * 8);
+  border-top:1px solid rgba(255,255,255,.16);
+}
+.detail__body .proj__h{
+  margin:calc(var(--px) * 8) 0 calc(var(--px) * 3);
+  font-family:var(--font-cjk);
+  font-size:clamp(17px, 1.7vw, 22px);
+  font-weight:700;
+  letter-spacing:.02em;
+  color:#ffffff;
+}
+.detail__body .proj__full > .proj__h:first-child{ margin-top:0; }
+.detail__body .proj__full p{
+  margin:0 0 1.1em;
+  font-family:var(--font-cjk);
+  font-size:clamp(14px, 1.25vw, 17px);
+  line-height:2.05;
+  letter-spacing:.02em;
+  color:#c4c4c4;
+}
+.detail__body .proj__full strong{ font-weight:400; color:#ffffff; }
+.detail__body .proj__full table{
+  width:100%;
+  border-collapse:collapse;
+  margin:0 0 1.4em;
+  font-family:var(--font-cjk);
+  font-size:14px;
+  color:#d8d8d8;
+}
+.detail__body .proj__full th,
+.detail__body .proj__full td{
+  padding:.6em .8em;
+  text-align:left;
+  border-bottom:1px solid rgba(255,255,255,.14);
+}
+.detail__body .proj__full th{ color:#ffffff; font-weight:400; }
+
+
+/* ══════════════════════════════════════════════════════════
+   EXPERIENCE — 3D 环绕环 + 景深
+   卡片用 rotateY + translateZ 摆成一个圈，JS 按 z 深度
+   写透明度和模糊（越靠后越淡越糊），转到正前方的才清晰
+   ══════════════════════════════════════════════════════════ */
+.reel{
+  position:relative;
+  flex:1;
+  display:flex; flex-direction:column;
+  min-height:0;
+  max-width:1000px;
+  width:100%;
+  margin:0 auto;
+}
+
+/* 环顶：当前正前方那条的标题。没有框，只是浮在环上方的一行字 */
+.reel__top{
+  position:relative; z-index:4;
+  display:flex; align-items:center;
+  padding:0 calc(var(--px) * 2) calc(var(--px) * 1.5);
+}
+.reel__now{
+  flex:1; min-width:0;
+  font-family:var(--font-label);
+  font-size:clamp(9px, 1.05vw, 12px);
+  letter-spacing:.08em;
+  color:#111111;
+  text-align:right;
+  text-shadow:none;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  animation:nowIn .45s ease;        /* 换字时的淡入 */
+}
+@keyframes nowIn{ from{ opacity:0; transform:translateY(-6px); } }
+
+/* 舞台：没有框，环直接浮在纸面上，占满剩下的高度 */
+.reel__stage{
+  position:relative;
+  flex:1;
+  min-height:calc(var(--px) * 80);
+  perspective:1100px;
+  perspective-origin:50% 46%;
+  overflow:hidden;
+  background:radial-gradient(120% 92% at 50% 46%, rgba(0,0,0,.06) 0%, transparent 72%);
+  cursor:grab;
+  touch-action:none;        /* 手机上按住左右拽是转环，不是滚页面 */
+}
+.reel__stage:active{ cursor:grabbing; }
+
+.reel__ring{
+  position:absolute; left:50%; top:50%;
+  width:min(430px, 64vw);
+  height:calc(var(--px) * 70);
+  margin:calc(var(--px) * -35) 0 0 calc(min(430px, 64vw) / -2);
+  transform-style:preserve-3d;
+  will-change:transform;
+}
+/* 整格切换和拖动松手才要过渡；拖动过程中是跟手的，不能有延迟 */
+.reel__ring.is-anim{
+  transition:transform .7s cubic-bezier(.34,1.2,.64,1);
+}
+.reel__ring.is-anim .cell{
+  transition:opacity .7s cubic-bezier(.34,1.2,.64,1), filter .7s ease;
+}
+
+.cell{
+  position:absolute; inset:0;
+  backface-visibility:visible;
+  will-change:transform, opacity, filter;
+}
+.cell__inner{
+  position:relative;
+  height:100%;
+  display:flex; flex-direction:column;
+  padding:calc(var(--px) * 5.5) calc(var(--px) * 6);
+  background:linear-gradient(165deg, #ffffff 0%, #f1f1f1 100%);
+  border:1px solid #111111;
+  box-shadow:inset 0 0 30px rgba(0,0,0,.05);
+  overflow:hidden;
+}
+/* 正前方那张：描边加粗、影子拉开，像一张贴在墙上的海报 */
+.cell.is-front .cell__inner{
+  border-color:#000000;
+  box-shadow:
+    inset 0 0 30px rgba(0,0,0,.04),
+    0 18px 40px rgba(0,0,0,.26),
+    0 3px 8px rgba(0,0,0,.12);
+  cursor:pointer;
+}
+/* 底下一排：左右箭头。同样不要框，箭头只是两枚淡字 */
+.reel__bar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:calc(var(--px) * 1.5) calc(var(--px) * 2) 0;
+}
+.reel__arrow{
+  flex:0 0 auto;
+  padding:calc(var(--px) * .5) calc(var(--px) * 1.5);
+  font-family:var(--font-label);
+  font-size:12px;
+  color:#7a7a7a;
+  opacity:.65;
+  transition:opacity .18s ease, color .18s ease, transform .18s ease;
+}
+.reel__arrow:hover{ opacity:1; color:#111111; transform:scale(1.3); }
+.reel__arrow:focus-visible{ opacity:1; outline:2px solid #111111; outline-offset:2px; }
+
+/* 两个箭头之间那行提示。flex:1 让它把中间撑满，字自然落在环的正下方 */
+.reel__bar .note{ flex:1; min-width:0; margin:0; }
+
+/* ── 卡片里的字（详情层里复用同一套） ─────────────────── */
+.cell__tag{
+  align-self:flex-start;
+  margin-bottom:calc(var(--px) * 3);
+  padding:calc(var(--px) * .8) calc(var(--px) * 2);
+  font-family:var(--font-cjk);
+  font-size:12px;
+  letter-spacing:.16em;
+  color:#ffffff;
+  background:#111111;
+}
+/* 活动经历：白底黑框，跟校园经历拉开 */
+.cell[data-kind="活动经历"] .cell__tag{
+  color:#111111;
+  background:#ffffff;
+  box-shadow:inset 0 0 0 2px #111111;
+}
+
+.cell__org{
+  margin:0 0 .5em;
+  font-family:var(--font-cjk);
+  font-size:clamp(17px, 1.7vw, 20px);
+  font-weight:700;
+  line-height:1.45;
+  letter-spacing:.02em;
+  color:#000000;
+}
+.cell__role{
+  margin:0 0 calc(var(--px) * 3);
+  font-family:var(--font-cjk);
+  font-size:13.5px;
+  font-weight:600;
+  letter-spacing:.04em;
+  color:#111111;
+}
+.cell__date{
+  margin-left:.8em;
+  font-family:var(--font-ui);
+  font-size:14px;
+  font-weight:300;
+  letter-spacing:.06em;
+  color:#8a8a8a;
+}
+.cell__list{
+  margin:0; padding-left:1.15em;
+  font-family:var(--font-cjk);
+  font-size:13px;
+  line-height:1.85;
+  letter-spacing:.02em;
+  color:#3d3d3d;
+}
+.cell__list li{ margin-bottom:.3em; }
+.cell__list li::marker{ color:#111111; }
+
+
+/* ══════════════════════════════════════════════════════════
+   详情：点卡片后从右边滑进来铺满，跟着鼠标往右让一点
+   满屏黑，像翻开一页杂志内页
+   ══════════════════════════════════════════════════════════ */
+/* 点的那张卡自己长成整页，同时整页往右让开淡下去。
+   卡片上量出的矩形 FLIP 到详情卡的矩形，所以看着是同一个东西在长大 */
+.detail{
+  position:fixed; inset:0; z-index:30;
+  visibility:hidden;
+  pointer-events:none;
+}
+.detail.is-on{ visibility:visible; pointer-events:auto; }
+/* 关的时候不再缩回那张卡片了（FLIP 反向那一下看着像突然一放），
+   整层直接淡掉，只有背后的桌面滑回原位 */
+.detail.is-closing{ opacity:0; transition:opacity .34s ease; }
+
+/* 衬底：卡片飞到位之前先透明，别把后面那页一下压黑 */
+.detail::before{
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(120% 100% at 50% 50%, rgba(0,0,0,.5) 0%, rgba(0,0,0,.82) 100%);
+  opacity:0;
+  transition:opacity .52s ease;
+}
+.detail.is-open::before{ opacity:1; }
+
+/* FLIP 层：只负责从「卡片的矩形」缩放到「详情卡的矩形」 */
+.detail__slide{
+  position:absolute; inset:0;
+  transform-origin:0 0;
+  transition:transform .72s cubic-bezier(.2,.9,.2,1);
+  will-change:transform;
+}
+
+/* 视差层：鼠标推着走，左右对称留白，推到头也顶不出视口 */
+.detail__card{
+  position:absolute;
+  top:calc(var(--px) * 5); bottom:calc(var(--px) * 5);
+  left:calc(var(--px) * 5); right:calc(var(--px) * 5);
+  transform:translate3d(var(--mx, 0px), var(--my, 0px), 0);
+  transition:transform .32s ease-out;
+  display:flex; flex-direction:column;
+  padding:calc(var(--px) * 9) calc(var(--px) * 11);
+  overflow-y:auto;
+  pointer-events:none;
+  background:#0b0b0b;
+  border:1px solid #262626;
+  box-shadow:0 40px 90px rgba(0,0,0,.6);
+}
+.detail.is-on .detail__card{ pointer-events:auto; }
+.detail__card::-webkit-scrollbar{ width:8px; }
+.detail__card::-webkit-scrollbar-track{ background:rgba(255,255,255,.06); }
+.detail__card::-webkit-scrollbar-thumb{ background:#3d3d3d; }
+
+.detail__close{
+  position:absolute; right:calc(var(--px) * 4); top:calc(var(--px) * 4);
+  width:calc(var(--px) * 9); height:calc(var(--px) * 9);
+  font-family:var(--font-label);
+  font-size:11px;
+  color:#ffffff;
+  border:1px solid rgba(255,255,255,.4);
+  background:transparent;
+  transition:background .18s ease, border-color .18s ease, color .18s ease;
+}
+.detail__close:hover{ background:#ffffff; border-color:#ffffff; color:#111111; }
+.detail__close:focus-visible{ outline:2px solid #ffffff; outline-offset:2px; }
+
+.detail__body{ width:100%; max-width:900px; margin:0 auto; }
+/* 详情里不要卡片那层壳，字放大 */
+.detail__body .cell__inner{
+  height:auto; padding:0;
+  background:none; border:0; box-shadow:none; overflow:visible;
+}
+/* 黑底上把文字翻过来 */
+.detail__body .cell__tag{ font-size:14px; margin-bottom:calc(var(--px) * 5);
+                          color:#111111; background:#ffffff; }
+.detail__body[data-kind="活动经历"] .cell__tag{
+  color:#ffffff; background:transparent; box-shadow:inset 0 0 0 2px #ffffff;
+}
+.detail__body .cell__org{ font-size:clamp(24px, 3.4vw, 48px); line-height:1.24;
+                          margin-bottom:.45em; color:#ffffff; }
+.detail__body .cell__role{ font-size:clamp(15px, 1.5vw, 21px); margin-bottom:calc(var(--px) * 6);
+                           color:#e0e0e0; }
+.detail__body .cell__date{ font-size:clamp(15px, 1.4vw, 19px); color:#8a8a8a; }
+.detail__body .cell__list{ font-size:clamp(15px, 1.3vw, 19px); line-height:2; color:#c4c4c4; }
+.detail__body .cell__list li{ margin-bottom:.5em; }
+.detail__body .cell__list li::marker{ color:#ffffff; }
+
+/* 技能那张卡也走同一层详情，但它的结构是 .card 而不是 .cell__inner，
+   这里把卡片的壳和字号都翻到黑底上 */
+.detail__body .card{
+  width:100%; margin:0; padding:0;
+  background:none; border:0; box-shadow:none;
+  transform:none;
+  cursor:default;
+}
+.detail__body .card:hover{ transform:none; box-shadow:none; }
+.detail__body .card__no{ font-size:clamp(38px, 5vw, 68px); color:#3a3a3a; margin-bottom:.25em; }
+.detail__body .card__title{ font-size:clamp(24px, 3.4vw, 46px); line-height:1.24; color:#ffffff; }
+.detail__body .card__text{ font-size:clamp(15px, 1.3vw, 19px); line-height:2; color:#c4c4c4; }
+.detail__body .card__text strong{
+  color:#ffffff;
+  background:linear-gradient(transparent 62%, rgba(255,255,255,.24) 62%);
+}
+
+/* 作品图 / 作品视频。卡片上不显示，只有点开之后才带出来 */
+.detail__works{
+  display:grid;
+  gap:calc(var(--px) * 6);
+  margin-top:calc(var(--px) * 11);
+  padding-top:calc(var(--px) * 8);
+  border-top:1px solid rgba(255,255,255,.16);
+}
+.detail__works img,
+.detail__works video{
+  display:block; width:100%; height:auto;
+  background:#151515;
+  border:1px solid rgba(255,255,255,.16);
+}
+
+/* ── 详情打开时，周围的一切让开 ───────────────────────── */
+/* ── 详情打开时，整页往右让开、淡下去 ─────────────────────
+   opacity 延迟 .1s：卡片先按原几何飞出去，页才慢慢暗，
+   不然行程一半时后面那页已经黑掉，看着像凭空冒出来的 */
+.shell, .taskbar{
+  transition:transform .62s cubic-bezier(.2,.9,.2,1), opacity .44s ease .1s;
+}
+.desktop.is-detail .shell{
+  transform:translateX(calc(48px + var(--pagex, 0px)));
+  opacity:.15;
+}
+.desktop.is-detail .taskbar{
+  transform:translateX(calc(48px + var(--pagex, 0px)));
+  opacity:.24;
+}
+/* 淡下去的东西也别再接收点击了，不然会隔着详情面板点到后面的标签 */
+.desktop.is-detail .side,
+.desktop.is-detail .reel__top,
+.desktop.is-detail .reel__bar,
+.desktop.is-detail .taskbar,
+.desktop.is-detail .reel__stage{ pointer-events:none; }
+/* 环绕的卡片淡到几乎看不见（行内样式是 JS 写的，得 !important 压）。
+   顺手给个过渡，只在详情期间生效，不会拖慢拖拽时的逐帧重绘 */
+.desktop.is-detail .cell{
+  opacity:.06 !important; filter:blur(7px) !important;
+  transition:opacity .5s ease, filter .5s ease;
+}
+
+/* 键盘转到环上的时候给个焦点框 */
+.reel__stage:focus-visible{ outline:2px solid #111111; outline-offset:-2px; }
+
+
+/* ══════════════════════════════════════════════════════════
+   任务栏 —— 一条黑边，压住页脚
+   ══════════════════════════════════════════════════════════ */
+.taskbar{
+  position:absolute; left:0; right:0; bottom:0;
+  height:44px;
+  display:flex; align-items:center; justify-content:space-between; gap:1.4em;
+  padding:0 calc(var(--px) * 4);
+  background:rgba(8,8,8,.94);
+  backdrop-filter:blur(6px);
+  border-top:1px solid #000000;
+  box-shadow:0 -4px 26px rgba(0,0,0,.2);
+  font-family:var(--font-label);
+  font-size:11px;
+  letter-spacing:.1em;
+  color:#8e8e8e;
+}
+.taskbar__brand{
+  background-image:var(--grad-brand);
+  -webkit-background-clip:text;
+          background-clip:text;
+  color:transparent;
+}
+/* 邮箱：绝对定位挂在栏中间。用 flex 的话左右两块的宽度不一样，居中是歪的 */
+.taskbar__mail{
+  position:absolute; left:50%; top:50%;
+  transform:translate(-50%,-50%);
+  text-decoration:none;
+  background-image:var(--grad-brand);
+  -webkit-background-clip:text;
+          background-clip:text;
+  color:transparent;
+  letter-spacing:.14em;
+}
+.taskbar__mail:focus-visible{ outline:2px solid #ffffff; outline-offset:3px; }
+.taskbar__clock{ color:#ffffff; }
+
+
+/* ══════════════════════════════════════════════════════════
+   窄屏
+   ══════════════════════════════════════════════════════════ */
+@media (max-width:760px){
+  .shell{ grid-template-columns:1fr; grid-template-rows:auto 1fr; }
+  /* 横过来之后没有弧了，侧栏退回一条实心黑边 */
+  .side__veil, .side__haze{ display:none; }
+  .side{
+    flex-direction:row; overflow-x:auto; overflow-y:hidden;
+    padding:calc(var(--px) * 3);
+    background:rgba(8,8,8,.94);
+    border-bottom:1px solid #000000;
+  }
+  .side__brand{ display:none; }
+  /* 窄屏转轮退化成一行横着摆的标签，JS 写的行内样式要 !important 才压得住 */
+  .side__wheel{
+    position:static; height:auto; margin:0;
+    display:flex; gap:calc(var(--px) * 2);
+    -webkit-mask-image:none; mask-image:none;
+  }
+  .tab{
+    position:static; flex:0 0 auto;
+    padding:calc(var(--px)*2) calc(var(--px)*3);
+    transform:none !important; opacity:1 !important; z-index:auto !important;
+  }
+  .tab__cn{ display:none; }
+  .panel{ padding:calc(var(--px) * 5) calc(var(--px) * 4); }
+  .panel__en{ font-size:clamp(20px, 6.5vw, 30px); }
+  /* 窄屏里文件夹上面的空当不用留那么大 */
+  .folder{ margin-top:calc(var(--px) * 8); }
+  .fact{ grid-template-columns:1fr; gap:.3em; }
+  .card{ margin-bottom:calc(var(--px) * 3); }
+  .card:nth-child(n){ transform:none; }
+}
